@@ -45,10 +45,20 @@ public class Board {
 		return b;
 	}
 	
+	public ArrayList<Board>getChildren(){
+		ArrayList<Board>list=new ArrayList<Board>();
+		for(int i=0;i<w;i++) {
+			if(allowed(i)) {
+				list.add(place(i));
+			}
+		}
+		return list;
+	}
+	
 	public void print() {
-		for(int x=0;x<w;x++) {
+		for(int y=h-1;y>=0;y--) {
 			System.out.print(" ");
-			for(int y=h-1;y>=0;y--) {
+			for(int x=0;x<w;x++) {
 				if(board[x][y]==0) {
 					System.out.print("  ");
 				}else if(board[x][y]==1) {

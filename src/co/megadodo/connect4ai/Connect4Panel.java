@@ -22,13 +22,22 @@ public class Connect4Panel extends JPanel implements MouseListener {
 	
 	public int lastAIMove=-1;
 	
+	//Score
+	// AI  Person
+	// 1/2 1/2
+	// 1   0
+	// 1   0
+	// 0   1
+	// TOTAL
+	// 2+1/2  1+1/2
+	
 	public Connect4Panel() {
 		board=new Board();
 		addMouseListener(this);
 		repaint();
 		
 		humanExists=true;
-		humanPlayer=1;
+		humanPlayer=2;
 		ai1=new AI2();
 		ai2=new AI2();
 		
@@ -36,9 +45,16 @@ public class Connect4Panel extends JPanel implements MouseListener {
 	}
 	
 	public void makeAIMove() {
+		repaint();
 		new Timer().schedule(new TimerTask() {
+			
 			@Override
 			public void run() {
+				
+
+				repaint();
+				long start,end;
+				int move;
 				AI ai=null;
 				if(!humanExists) {
 					if(board.player==1)ai=ai1;
@@ -46,7 +62,19 @@ public class Connect4Panel extends JPanel implements MouseListener {
 				}else {
 					ai=ai1;
 				}
-				int move = ai.getBestMove(board, board.player);
+				start=System.currentTimeMillis();
+				move = ai.getBestMove(board, board.player);
+				end=System.currentTimeMillis();
+				float time=(end-start)/1000.0f;
+				System.out.println("Time for move: "+time);
+//				float delay=0.1f;
+//				float timerLength=0;
+//				if(time>delay)timerLength=0;
+//				else timerLength=delay-time;
+//				new Timer().schedule(new TimerTask() {
+//					
+//					@Override
+//					public void run() {
 				board = board.place(move);
 				repaint();
 				handleWin();
@@ -54,6 +82,10 @@ public class Connect4Panel extends JPanel implements MouseListener {
 				if(!humanExists) {
 					makeAIMove();
 				}
+//					}
+//				}, (int)(timerLength*1000));
+				
+				
 			}
 		}, 10);
 	}
@@ -80,9 +112,12 @@ public class Connect4Panel extends JPanel implements MouseListener {
 	public void handleWin() {
 		if(board.getNumInRow(4, 1)>0) {
 			JOptionPane.showMessageDialog(this, "Red won");
+			board=new Board();
+			repaint();
 		}else if(board.getNumInRow(4, 2)>0) {
 			JOptionPane.showMessageDialog(this, "Yellow won");
 			board=new Board();
+			repaint();
 		}
 	}
 
