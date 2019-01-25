@@ -29,7 +29,19 @@ public class Connect4Panel extends JPanel implements MouseListener {
 	// 1   0
 	// 0   1
 	// TOTAL
-	// 2+1/2  1+1/2
+	// 5/2 3/2
+	
+	// AI  Person
+	// 1   0
+	// 1   0
+	// 0   1
+	//      
+	// 0   1
+	// 1   0
+	// 1   0
+	
+	// TOTAL
+	// 4   2
 	
 	public Connect4Panel() {
 		board=new Board();
@@ -37,11 +49,12 @@ public class Connect4Panel extends JPanel implements MouseListener {
 		repaint();
 		
 		humanExists=true;
-		humanPlayer=2;
+		humanPlayer=1;
 		ai1=new AI2();
 		ai2=new AI2();
 		
-		if(humanPlayer!=1||!humanExists)makeAIMove();
+		if(humanExists&&humanPlayer==2)makeAIMove();
+		if(!humanExists)makeAIMove();
 	}
 	
 	public void makeAIMove() {

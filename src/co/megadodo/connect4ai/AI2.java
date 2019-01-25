@@ -67,7 +67,7 @@ public class AI2 extends AI {
 		int bestMove=0;
 		
 		for(Integer move:moves) {
-			float f=minimax(8,board.place(move),negInf,posInf,false);
+			float f=minimax(10,board.place(move),negInf,posInf,false);
 			if(f>=bestF) {
 				bestF=f;
 				bestMove=move;
